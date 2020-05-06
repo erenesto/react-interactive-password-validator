@@ -1,6 +1,6 @@
 ## interactive password validator
 
-Designed by [Neven Solidov](https://dribbble.com/shots/7259090-Password-Validation)
+See the actual design on [Dribbble](https://dribbble.com/shots/7259090-Password-Validation)
 
 See on [CodePen](https://codepen.io/erenesto/full/YzyYgvJ)
 

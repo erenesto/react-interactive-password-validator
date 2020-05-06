@@ -224,3 +224,15 @@ body {
 .lock-icon.locked path {
   opacity: 1;
 }
+
+@media only screen and (max-height: 320px) {
+  .validation-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .validation-item {
+    width: 40%;
+  }
+}
