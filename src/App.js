@@ -24,13 +24,10 @@ const validationObj = {
 const validationReducer = (state, action) => {
   switch (action.type) {
     case 'lowercase':
-      return { ...state, lowercase: action.payload };
     case 'uppercase':
-      return { ...state, uppercase: action.payload };
     case 'number':
-      return { ...state, number: action.payload };
     case 'minChar':
-      return { ...state, minChar: action.payload };
+      return { ...state, [action.type]: action.payload };
     default:
       return state;
   }
@@ -47,39 +44,18 @@ function App() {
   };
 
   const validate = (value) => {
-    const checkLength = value.length >= 8;
-    const checkLowerCase = /[a-z|ç|ş|ö|ü|ı|ğ]/u.test(value);
-    const checkUpperCase = /[A-Z|Ç|Ş|Ö|Ü|İ|Ğ]/u.test(value);
-    const checkNumber = /[0-9]/.test(value);
+    const validations = {
+      lowercase: /[a-z|ç|ş|ö|ü|ı|ğ]/u.test(value),
+      uppercase: /[A-Z|Ç|Ş|Ö|Ü|İ|Ğ]/u.test(value),
+      number: /[0-9]/.test(value),
+      minChar: value.length >= 8,
+    };
 
-    if (checkLength) {
-      dispatch({ type: 'minChar', payload: true });
-    } else {
-      dispatch({ type: 'minChar', payload: false });
+    for (const [key, isValid] of Object.entries(validations)) {
+      dispatch({ type: key, payload: isValid });
     }
 
-    if (checkLowerCase) {
-      dispatch({ type: 'lowercase', payload: true });
-    } else {
-      dispatch({ type: 'lowercase', payload: false });
-    }
-
-    if (checkUpperCase) {
-      dispatch({ type: 'uppercase', payload: true });
-    } else {
-      dispatch({ type: 'uppercase', payload: false });
-    }
-
-    if (checkNumber) {
-      dispatch({ type: 'number', payload: true });
-    } else {
-      dispatch({ type: 'number', payload: false });
-    }
-
-    const isAllGood =
-      checkLength && checkUpperCase && checkLowerCase && checkNumber;
-
-    return isAllGood;
+    return Object.values(validations).every(Boolean);
   };
 
   useEffect(() => {
